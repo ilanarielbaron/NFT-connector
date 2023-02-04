@@ -32,7 +32,6 @@ export const syncUser = async (
 export const connectUser = async (dispatch: AppDispatch, address: string): Promise<void> => {
 	await callAPI(dispatch, async()=> {
 		const user = await getUserByAddress(address);
-		console.log(user);
 		if (user) {
 			syncUser(
 				user,

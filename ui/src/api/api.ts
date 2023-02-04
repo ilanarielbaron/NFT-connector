@@ -6,7 +6,7 @@ export const getUserByAddress = async (
 	const requestOptions = {
 		method: 'GET',
 	};
-	const url = `${BASE_URL}${address}`;
+	const url = `${BASE_URL}users/${address}`;
 
 	try {
 		const response = await fetch(url, requestOptions).then((data) => data.json());
@@ -33,12 +33,73 @@ export const createUser = async (address: string): Promise<User | null> => {
 		}),
 	};
 
+	const url = `${BASE_URL}users/`;
+
 	try {
-		const response = await fetch(BASE_URL, requestOptions).then((data) => data.json());
+		const response = await fetch(url, requestOptions).then((data) => data.json());
 		if (!response) return null;
 
 		return response.data?.user;
 	} catch(e: unknown) {
+		return null;
+	}
+};
+
+
+export const fetchRandomUUID = async (): Promise<string | null> => {
+	const requestOptions = {
+		method: 'GET',
+	};
+	const url = `${BASE_URL}authentication`;
+
+	try {
+		const response = await fetch(url, requestOptions).then((data) => data.json());
+		if (!response) return null;
+
+		return response.data?.uuid;
+	} catch(e) {
+		return null;
+	}
+};
+
+export const generateToken = async (sign: string): Promise<string | null> => {
+	const requestOptions = {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+		},
+		body: JSON.stringify({
+			sign
+		}),
+	};
+	const url = `${BASE_URL}authentication`;
+
+	try {
+		const response = await fetch(url, requestOptions).then((data) => data.json());
+		if (!response) return null;
+
+		return response.data?.token;
+	} catch(e) {
+		return null;
+	}
+};
+
+
+export const verifyToken = async (token: string): Promise<string | null> => {
+	const requestOptions = {
+		method: 'GET',
+		headers: {
+			Authorization: `Bearer ${token}`,
+		},
+	};
+	const url = `${BASE_URL}authentication/verify`;
+
+	try {
+		const response = await fetch(url, requestOptions).then((data) => data.json());
+		if (!response.status) return null;
+
+		return response.data?.token;
+	} catch(e) {
 		return null;
 	}
 };
