@@ -33,7 +33,6 @@ export const createUser = async (address: string): Promise<User | null> => {
 		}),
 	};
 
-	console.log(requestOptions);
 	try {
 		const response = await fetch(BASE_URL, requestOptions).then((data) => data.json());
 		if (!response) return null;

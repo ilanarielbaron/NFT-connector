@@ -3,7 +3,7 @@ import { AppDispatch } from '../store';
 import { updateAnswers } from '../store/answersReducer';
 import { disconnectAccount } from '../store/twitterReducer';
 import { errorMessage, logoutUser } from '../store/userReducer';
-import { disconnectWallet } from '../store/walletReducer';
+import { disconnectWallet, signMessage } from '../store/walletReducer';
 import { callAPI } from './api';
 import { connectUser, syncUser } from './user';
 
@@ -24,7 +24,8 @@ export const userIsConnected = async (dispatch: AppDispatch): Promise<void> => {
 
 export const accountChanged = async (address: string, dispatch: AppDispatch): Promise<void> => {
 	await callAPI(dispatch, async()=> {
-		console.log(address);
+		//@ts-expect-error out of typescript scope
+		console.log(window.ethereum.personal_sign);
 		if(!address) {
 			disconnectAll(dispatch);
 
@@ -56,8 +57,20 @@ export const disconnectAll = (dispatch: AppDispatch): void => {
 };
 
 //Sign the message with Metamask
-export const signAccount = (dispatch: AppDispatch): void => {
-	return;
+export const signAccount = async(dispatch: AppDispatch, address: string): Promise<void> => {
+	try {
+		const from = address;
+		const msg = 'Sign message';
+		//@ts-expect-error out of typescript scope
+		await window.ethereum.request({
+			method: 'personal_sign',
+			params: [msg, from, 'Passw0rd'],
+		});
+
+		dispatch(signMessage());
+	} catch (err) {
+		console.error(err);
+	}
 };
 
 export const connectHandler = async (dispatch: AppDispatch): Promise<void> => {

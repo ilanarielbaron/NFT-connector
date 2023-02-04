@@ -2,7 +2,7 @@ import { Button } from '@mui/material';
 import { useAppSelector } from '../../hooks/useAppSelector';
 import { selectWallet, selectWalletIsConnected } from '../../store/walletReducer';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
-import { connectHandler } from '../../utils/metamask';
+import { connectHandler, signAccount } from '../../utils/metamask';
 import { selectWalletIsLoading } from '../../store/walletReducer';
 
 export const ConnectButton = () => {
@@ -11,15 +11,26 @@ export const ConnectButton = () => {
 	const isLoading = useAppSelector(selectWalletIsLoading);
 	const wallet = useAppSelector(selectWallet);
 
+	const onClick = async(): Promise<void> => {
+		if(!isConnected) {
+			await connectHandler(dispatch);
+
+			return;
+		}
+
+		if(isConnected && !wallet?.messageSigned && wallet?.address) {
+			signAccount(dispatch, wallet.address);
+		}
+	};
+
 	return (
 		<Button
 			disabled={isLoading}
 			variant='outlined'
 			sx={{ my: 1, mx: 1.5 }}
-			onClick={async (): Promise<void> => { !isConnected && await connectHandler(dispatch); }
-			}
+			onClick={onClick}
 		>
-			{isLoading ? 'loading' : isConnected ? wallet?.address : 'Connect'}
+			{isLoading ? 'loading' : isConnected ? (wallet?.messageSigned ? wallet?.address : 'Sign') : 'Connect'}
 		</Button>
 	);
 };
