@@ -1,16 +1,11 @@
 import express from "express";
 import {
-  all,
-  changeOrder,
-  edit,
-  insertNew,
-  remove,
+  getUserByAddress,
+  updateUser
 } from "./controllers/userController";
 
 const router = express.Router();
 
-router.route("/").post(insertNew).get(all).delete(remove).patch(edit);
-
-router.route("/changeOrder").post(changeOrder);
+router.route("/:address").get(getUserByAddress).patch(updateUser);
 
 export default router;

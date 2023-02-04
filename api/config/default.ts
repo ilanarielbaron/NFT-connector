@@ -1,5 +1,6 @@
 export default {
   origin: 'http://localhost:3000',
-  mongoPassword: 'MONGO_PASSWORD',
-  mongoUser: 'MONGO_USER',
+  port: '8000',
+  mongoPassword: process.env.MONGO_PASSWORD,
+  mongoUser: process.env.MONGO_USER,
 };
