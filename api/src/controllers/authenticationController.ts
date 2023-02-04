@@ -58,7 +58,7 @@ export const verify = async (req: Request, res: Response) => {
   try {
     const token = req
       .header("Authorization")
-      ?.replace('Bearer "', "")
+      ?.replace('Bearer ', '')
       .replace('"', "");
 
     if (!token)

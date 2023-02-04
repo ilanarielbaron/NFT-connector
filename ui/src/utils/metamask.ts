@@ -1,4 +1,4 @@
-import { createUser, fetchRandomUUID, generateToken, getUserByAddress, verifyToken } from '../api/api';
+import { createUser, fetchRandomUUID, generateToken, getUserByAddress } from '../api/api';
 import { AppDispatch } from '../store';
 import { updateAnswers } from '../store/answersReducer';
 import { disconnectAccount } from '../store/twitterReducer';
@@ -14,18 +14,8 @@ export const userIsConnected = async (dispatch: AppDispatch): Promise<void> => {
 			method: 'eth_accounts',
 		});
 		if (accounts?.length > 0) {
-			connectUser(dispatch, accounts[0]);
 			const token = localStorage.getItem('token');
-
-			if(token) {
-				await callAPI(dispatch, async()=> {
-					const tokenVerified = await verifyToken(token);
-		
-					if(tokenVerified) {
-						dispatch(signMessage());
-					}
-				});
-			}
+			await connectUser(dispatch, accounts[0], token);
 		}
 	} catch (err) {
 		dispatch(errorMessage({ message: 'There was a problem connecting to metamask' }));
@@ -39,6 +29,7 @@ export const accountChanged = async (address: string, dispatch: AppDispatch): Pr
 
 			return;
 		}
+
 		// Get the user from the DB by address
 		let user = await getUserByAddress(address);
 
