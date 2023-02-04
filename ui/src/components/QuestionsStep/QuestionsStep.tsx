@@ -2,9 +2,9 @@ import { Box, Typography, Link } from '@mui/material';
 import { useState } from 'react';
 import { activeStepBoxStyles, inactiveStepBoxStyles } from '../Pipeline/PipelineStyles';
 import actionArrow from './action-arrow.svg';
-import inactiveTwitter from './inactive-twitter.svg';
+import inactiveTwitter from './inactive-questions.svg';
 
-export const TwitterStep = ()=>{
+export const QuestionsStep = ()=>{
 	const [activeStep, setActiveStep] = useState(false);
 
 
@@ -14,9 +14,8 @@ export const TwitterStep = ()=>{
 				<Box sx={{display:'flex'}}>
 					<img src={inactiveTwitter}/>
 					<Box sx={{ml:'35px', color: activeStep ? '' : '#bbbbbb'}}>
-						<Typography variant='h5'>Follow <Link color="inherit">Igor</Link>, <Link  color="inherit">DimensionalsRPG</Link>, and <Link  color="inherit">SashaMackinnon</Link>
-						</Typography>
-						<Typography >And connect your twitter</Typography>
+						<Typography variant='h5'>Answer Questions</Typography>
+						<Typography >Tell us about yourself</Typography>
 					</Box>
 				</Box>
 			</Box>
