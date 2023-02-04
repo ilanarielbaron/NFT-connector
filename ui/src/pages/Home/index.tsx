@@ -1,4 +1,5 @@
 import { Alert, CircularProgress } from '@mui/material';
+import { Main } from '../../components/Main/Main';
 import { useAppSelector } from '../../hooks/useAppSelector';
 import { selectErrorMessage, selectUserIsLoading } from '../../store/userReducer';
 import { selectWalletIsConnected } from '../../store/walletReducer';
@@ -12,7 +13,10 @@ const Home = () => {
 
 	if (isLoading) return <CircularProgress sx={{ marginTop: 5 }} />;
 
-	return <>{walletConnected && <h1>Free NFT</h1>}</>;
+	return <>{walletConnected || true  && 
+	//main component here
+		<Main/>
+	}</>;
 };
 
 export default Home;
