@@ -23,10 +23,14 @@ const userSlice = createSlice({
 			state.isRegistered = true;
 			state.errorMessage = undefined;
 		},
+		logoutUser: (state): void => {
+			state.isRegistered = false;
+			state.errorMessage = undefined;
+		},
 	},
 });
 
-export const { errorMessage, toggleUserLoading, registerUser } = userSlice.actions;
+export const { errorMessage, toggleUserLoading, registerUser, logoutUser } = userSlice.actions;
 
 export const selectUserIsLoading = (state: RootState) => state.user.isLoading;
 export const selectUserIsRegistered = (state: RootState) => state.user.isRegistered;

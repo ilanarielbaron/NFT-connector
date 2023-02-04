@@ -17,12 +17,12 @@ export const nftsSlice = createSlice({
 	reducers: {
 		connectAccount: (
 			state,
-			action: PayloadAction<{ accountUser: string, twitterIdsFollowed: string[], }>,
+			action: PayloadAction<{ accountUser: string, twitterIdsFollowed: string[], isVerified: boolean }>,
 		): void => {
 			state.isConnected = true;
 			state.account = {
 				accountUser: action.payload.accountUser,
-				isVerified: true,
+				isVerified: action.payload.isVerified,
 				twitterIdsFollowed: action.payload.twitterIdsFollowed
 			};
 		},
