@@ -8,7 +8,7 @@ const Layout = ({ children }: { children: React.ReactElement }) => (
 		<CssBaseline />
 		<Box sx={{ display: 'flex', p:'4%'}}>
 			<NavBar />
-			<Container maxWidth='md' component='main'>
+			<Container component='main'>
 				{children}
 			</Container>
 		</Box>
