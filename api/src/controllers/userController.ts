@@ -30,7 +30,7 @@ export async function getUserByAddress(req: Request, res: Response) {
 /** Create a new user */
 export async function createUser(req: Request, res: Response) {
   try {
-    const { publicAddress } = req.params;
+    const { publicAddress } = req.body;
     if (!publicAddress)
       return res.status(401).json({
         status: "fail",
@@ -41,6 +41,8 @@ export async function createUser(req: Request, res: Response) {
       publicAddress,
       isRegistered: false,
     });
+
+    await user.save();
 
     return res.status(200).json({
       status: "success",
@@ -87,7 +89,7 @@ export async function updateUser(req: Request, res: Response) {
     userRecord.isRegistered = params.isRegistered || userRecord.isRegistered;
     userRecord.answers = params.answers || userRecord.answers;
 
-    userRecord.save();
+    await userRecord.save();
 
     return res.status(200).json({
       status: "success",

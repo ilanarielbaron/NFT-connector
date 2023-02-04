@@ -18,8 +18,6 @@ app.all("/*", function (req, res, next) {
   next();
 });
 
-console.log(`${config.get("mongoUser")}:${config.get("mongoPassword")}`);
-
 mongoose.connect(
   `mongodb+srv://${config.get("mongoUser")}:${config.get(
     "mongoPassword"
