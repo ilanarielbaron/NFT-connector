@@ -1,0 +1,18 @@
+version: "1"
+services:
+        nft-api:
+            container_name: nft-api
+            image: latest/nft-api
+            restart: always
+            build: .
+            ports:
+              - "7500:7500"
+            links:
+              - mongo
+        mongo:
+              container_name: mongo
+              image: mongo
+              volumes:
+                - ./data:/data/db
+              ports:
+                - '27018:27017'
