@@ -1,9 +1,9 @@
-import { getUserByAddress } from '../api/api';
+import { getUserByAddress, verifyToken } from '../api/api';
 import { AppDispatch } from '../store';
 import { updateAnswers } from '../store/answersReducer';
 import { connectAccount, disconnectAccount } from '../store/twitterReducer';
 import { logoutUser, registerUser } from '../store/userReducer';
-import { connectWallet } from '../store/walletReducer';
+import { connectWallet, signMessage } from '../store/walletReducer';
 import { callAPI } from './api';
 
 // Syncronize store state with the DB user
@@ -29,7 +29,7 @@ export const syncUser = async (
 	}
 };
 
-export const connectUser = async (dispatch: AppDispatch, address: string): Promise<void> => {
+export const connectUser = async (dispatch: AppDispatch, address: string, token: string | null): Promise<void> => {
 	await callAPI(dispatch, async()=> {
 		const user = await getUserByAddress(address);
 		if (user) {
@@ -37,6 +37,13 @@ export const connectUser = async (dispatch: AppDispatch, address: string): Promi
 				user,
 				dispatch,
 			);
+
+			if(token) {
+				const tokenVerified = await verifyToken(token);
+				if(tokenVerified) {
+					dispatch(signMessage());
+				}
+			}
 		}
 	});
 };
