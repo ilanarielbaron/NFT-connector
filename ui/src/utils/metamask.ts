@@ -1,67 +1,66 @@
-import { errorMessage, toggleUserLoading } from '../store/userReducer';
+import { createUser, getUserByAddress } from '../api/api';
+import { AppDispatch } from '../store';
+import { updateAnswers } from '../store/answersReducer';
+import { disconnectAccount } from '../store/twitterReducer';
+import { errorMessage, logoutUser } from '../store/userReducer';
 import { disconnectWallet } from '../store/walletReducer';
+import { callAPI } from './api';
+import { connectUser, syncUser } from './user';
 
-const syncUser = async (
-	user: User,
-	dispatch: any,
-): Promise<void> => {
-	dispatch(toggleUserLoading({ isLoading: true }));
-	// Sync all the store
-	dispatch(toggleUserLoading({ isLoading: false }));
-};
 
-export const userIsConnected = async (dispatch: any): Promise<void> => {
-	dispatch(toggleUserLoading({ isLoading: true }));
+export const userIsConnected = async (dispatch: AppDispatch): Promise<void> => {
 	try {
 		//@ts-expect-error out of typescript scope
 		const accounts = await window.ethereum.request({
 			method: 'eth_accounts',
 		});
 		if (accounts?.length > 0) {
-			// Fetch the user by address from the API
-			// if (userConnected) {
-			// 	syncUser(
-			// 		userConnected,
-			// 		dispatch,
-			// 	);
-			// }
+			connectUser(dispatch, accounts[0]);
 		}
-		dispatch(toggleUserLoading({ isLoading: false }));
 	} catch (err) {
-		dispatch(errorMessage({ message: 'There was a problem with the API' }));
+		dispatch(errorMessage({ message: 'There was a problem connecting to metamask' }));
 	}
 };
 
-export const accountChanged = async (address: string, dispatch: any): Promise<void> => {
-	dispatch(toggleUserLoading({ isLoading: true }));
-	//@ts-expect-error out of typescript scope
-	const chainId = window.ethereum.chainId;
-	// Get the user from the DB by address
-	//const existingUser = await getUserByAddress(address);
+export const accountChanged = async (address: string, dispatch: AppDispatch): Promise<void> => {
+	await callAPI(dispatch, async()=> {
+		console.log(address);
+		if(!address) {
+			disconnectAll(dispatch);
 
-	// If there is a user created use it, if not just create a new one in out DB
-	//let id = '';
-	// if (!existingUser) {
-	// 	id = await createUser(address, chainId);
-	// } else {
-	// 	id = existingUser.id;
-	// 	await connectUser(existingUser.id);
-	// }
-	dispatch(toggleUserLoading({ isLoading: false }));
-	//syncUser({ address, chainId, nftsLiked, id }, dispatch);
+			return;
+		}
+		// Get the user from the DB by address
+		let user = await getUserByAddress(address);
+
+		if (!user) {
+			user = await createUser(address);
+		}
+
+		if(user) {
+			syncUser(user, dispatch);
+		}
+	});
 };
 
-export const chainChanged = (dispatch: any): void => {
-	dispatch(disconnectWallet());
+export const chainChanged = (dispatch: AppDispatch): void => {
+	disconnectAll(dispatch);
 	// Reset the rest of the store
 };
 
+export const disconnectAll = (dispatch: AppDispatch): void => {
+	dispatch(disconnectWallet());
+	dispatch(logoutUser());
+	dispatch(disconnectAccount());
+	dispatch(updateAnswers({answers: []}));
+};
+
 //Sign the message with Metamask
-export const signAccount = (dispatch: any): void => {
+export const signAccount = (dispatch: AppDispatch): void => {
 	return;
 };
 
-export const connectHandler = async (dispatch: any): Promise<void> => {
+export const connectHandler = async (dispatch: AppDispatch): Promise<void> => {
 	//@ts-expect-error out of typescript scope
 	if (window.ethereum) {
 		try {

@@ -17,12 +17,11 @@ const walletSlice = createSlice({
 	reducers: {
 		connectWallet: (
 			state,
-			action: PayloadAction<{ address: string; chainId: string }>,
+			action: PayloadAction<{ address: string }>,
 		): void => {
 			state.isConnected = true;
 			state.wallet = {
 				address: action.payload.address,
-				chainId: action.payload.chainId,
 				messageSigned: false,
 			};
 		},
@@ -49,6 +48,5 @@ export const { connectWallet, disconnectWallet, signMessage, toggleLoading } = w
 export const selectWallet = (state: RootState) => state.wallet.wallet;
 export const selectWalletIsConnected = (state: RootState) => state.wallet.isConnected;
 export const selectWalletIsLoading = (state: RootState) => state.wallet.isLoading;
-export const selectChainId = (state: RootState) => state.wallet.wallet?.chainId;
 
 export default walletSlice.reducer;

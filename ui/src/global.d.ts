@@ -1,6 +1,5 @@
 interface Wallet {
   messageSigned: boolean;
-  chainId: string;
   address: string;
 }
 
@@ -16,11 +15,11 @@ interface Question {
 }
 
 interface User {
-  id: string;
+  _id: string;
   publicAddress: string;
-  twitterUser: string;
-  twitterVerified: boolean;
-  twitterFollowed: string[];
-  isRegistered: boolean;
-  anwers?: Question[];
+  twitterUser?: string;
+  twitterVerified?: boolean;
+  twitterFollowed?: string[];
+  isRegistered?: boolean;
+  answers?: Question[];
 }
