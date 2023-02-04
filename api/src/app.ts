@@ -2,7 +2,8 @@ require("dotenv").config();
 import express from "express";
 import config from "config";
 import mongoose from "mongoose";
-import router from "./routes";
+import userRouter from "./userRouting";
+import authenticationRouter from "./authenticationRouting";
 
 const app = express();
 
@@ -13,7 +14,7 @@ app.use(express.json({ limit: "10kb" }));
 //TODO: CHANGE FOR THE UI IP
 app.all("/*", function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Content-Type");
+  res.header("Access-Control-Allow-Headers", "Content-Type, authorization");
   res.header("Access-Control-Allow-Methods", "DELETE, PUT, GET, POST, PATCH");
   next();
 });
@@ -31,7 +32,8 @@ mongoose.connect(
 mongoose.set("strictQuery", false);
 
 // Routes
-app.use("/users", router);
+app.use("/users", userRouter);
+app.use("/authentication", authenticationRouter);
 const port = config.get<number>("port");
 app.listen(port);
 

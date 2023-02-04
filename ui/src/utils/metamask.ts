@@ -1,12 +1,11 @@
-import { createUser, getUserByAddress } from '../api/api';
+import { createUser, fetchRandomUUID, generateToken, getUserByAddress, verifyToken } from '../api/api';
 import { AppDispatch } from '../store';
 import { updateAnswers } from '../store/answersReducer';
 import { disconnectAccount } from '../store/twitterReducer';
 import { errorMessage, logoutUser } from '../store/userReducer';
-import { disconnectWallet } from '../store/walletReducer';
+import { disconnectWallet, signMessage, unSignMessage } from '../store/walletReducer';
 import { callAPI } from './api';
 import { connectUser, syncUser } from './user';
-
 
 export const userIsConnected = async (dispatch: AppDispatch): Promise<void> => {
 	try {
@@ -16,6 +15,17 @@ export const userIsConnected = async (dispatch: AppDispatch): Promise<void> => {
 		});
 		if (accounts?.length > 0) {
 			connectUser(dispatch, accounts[0]);
+			const token = localStorage.getItem('token');
+
+			if(token) {
+				await callAPI(dispatch, async()=> {
+					const tokenVerified = await verifyToken(token);
+		
+					if(tokenVerified) {
+						dispatch(signMessage());
+					}
+				});
+			}
 		}
 	} catch (err) {
 		dispatch(errorMessage({ message: 'There was a problem connecting to metamask' }));
@@ -24,7 +34,6 @@ export const userIsConnected = async (dispatch: AppDispatch): Promise<void> => {
 
 export const accountChanged = async (address: string, dispatch: AppDispatch): Promise<void> => {
 	await callAPI(dispatch, async()=> {
-		console.log(address);
 		if(!address) {
 			disconnectAll(dispatch);
 
@@ -38,6 +47,7 @@ export const accountChanged = async (address: string, dispatch: AppDispatch): Pr
 		}
 
 		if(user) {
+			dispatch(unSignMessage());
 			syncUser(user, dispatch);
 		}
 	});
@@ -45,7 +55,6 @@ export const accountChanged = async (address: string, dispatch: AppDispatch): Pr
 
 export const chainChanged = (dispatch: AppDispatch): void => {
 	disconnectAll(dispatch);
-	// Reset the rest of the store
 };
 
 export const disconnectAll = (dispatch: AppDispatch): void => {
@@ -56,8 +65,30 @@ export const disconnectAll = (dispatch: AppDispatch): void => {
 };
 
 //Sign the message with Metamask
-export const signAccount = (dispatch: AppDispatch): void => {
-	return;
+export const signAccount = async(dispatch: AppDispatch, address: string): Promise<void> => {
+	try {
+		await callAPI(dispatch, async()=> {
+			const uuid = await fetchRandomUUID();
+
+			if(uuid) {
+				const from = address;
+				//@ts-expect-error out of typescript scope
+				const signature = await window.ethereum.request({
+					method: 'personal_sign',
+					params: [uuid, from, 'Passw0rd'],
+				});
+
+				const token = await generateToken(signature);
+				if(token) {
+					localStorage.setItem('token', token);
+					dispatch(signMessage());
+				}
+			}
+		});
+		
+	} catch (err) {
+		dispatch(errorMessage({ message: 'There was a problem signing the message' }));
+	}
 };
 
 export const connectHandler = async (dispatch: AppDispatch): Promise<void> => {

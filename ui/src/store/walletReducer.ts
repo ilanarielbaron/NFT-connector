@@ -40,10 +40,18 @@ const walletSlice = createSlice({
 				messageSigned: true,
 			};
 		},
+		unSignMessage: (
+			state,
+		): void => {
+			state.wallet = {
+				...state.wallet as Wallet,
+				messageSigned: false,
+			};
+		},
 	},
 });
 
-export const { connectWallet, disconnectWallet, signMessage, toggleLoading } = walletSlice.actions;
+export const { connectWallet, disconnectWallet, signMessage, toggleLoading, unSignMessage } = walletSlice.actions;
 
 export const selectWallet = (state: RootState) => state.wallet.wallet;
 export const selectWalletIsConnected = (state: RootState) => state.wallet.isConnected;
