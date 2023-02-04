@@ -4,8 +4,43 @@ import { User } from "../models/users";
 /** Get user by public address */
 export async function getUserByAddress(req: Request, res: Response) {
   try {
+    const { address } = req.params;
+    if (!address)
+      return res.status(401).json({
+        status: "fail",
+        message: "Error getting the user",
+      });
+
+    const user = await User.findOne({ publicAddress: address });
+
+    return res.status(200).json({
+      status: "success",
+      data: {
+        user,
+      },
+    });
+  } catch (error: unknown) {
+    return res.status(409).json({
+      status: "fail",
+      message: "Error getting the user",
+    });
+  }
+}
+
+/** Create a new user */
+export async function createUser(req: Request, res: Response) {
+  try {
     const { publicAddress } = req.params;
-    const user = await User.find({ publicAddress });
+    if (!publicAddress)
+      return res.status(401).json({
+        status: "fail",
+        message: "Public address is needed",
+      });
+
+    const user = new User({
+      publicAddress,
+      isRegistered: false,
+    });
 
     return res.status(200).json({
       status: "success",
@@ -52,10 +87,12 @@ export async function updateUser(req: Request, res: Response) {
     userRecord.isRegistered = params.isRegistered || userRecord.isRegistered;
     userRecord.answers = params.answers || userRecord.answers;
 
+    userRecord.save();
+
     return res.status(200).json({
       status: "success",
       data: {
-        user,
+        user: userRecord,
       },
     });
   } catch (error: unknown) {

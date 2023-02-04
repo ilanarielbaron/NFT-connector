@@ -6,11 +6,11 @@ interface todoModelInterface extends mongoose.Model<UserDoc> {
 
 interface UserDoc extends mongoose.Document {
   publicAddress: string;
-  twitterUser: string;
-  twitterVerified: boolean;
-  twitterFollowed: string[];
-  isRegistered: boolean;
-  anwers: Question[];
+  twitterUser?: string;
+  twitterVerified?: boolean;
+  twitterFollowed?: string[];
+  isRegistered?: boolean;
+  answers?: Question[];
 }
 
 const answersSchema = new mongoose.Schema({
@@ -31,15 +31,15 @@ const userSchema = new mongoose.Schema({
   },
   twitterUser: {
     type: String,
-    required: true,
+    required: false,
   },
   twitterVerified: {
     type: Boolean,
-    required: true,
+    required: false,
   },
   twitterFollowed: {
     type: [String],
-    required: true,
+    required: false,
   },
   isRegistered: {
     type: Boolean,
@@ -47,7 +47,7 @@ const userSchema = new mongoose.Schema({
   },
   answers: {
     type: [answersSchema],
-    required: true,
+    required: false,
   },
 });
 

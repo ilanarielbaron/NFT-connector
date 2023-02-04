@@ -18,15 +18,19 @@ app.all("/*", function (req, res, next) {
   next();
 });
 
+console.log(`${config.get("mongoUser")}:${config.get("mongoPassword")}`);
+
 mongoose.connect(
   `mongodb+srv://${config.get("mongoUser")}:${config.get(
     "mongoPassword"
-  )}@cluster0.guz80.mongodb.net/?retryWrites=true&w=majority`,
+  )}@cluster0.guz80.mongodb.net/nft-connector?retryWrites=true&w=majority`,
   {},
   () => {
     console.log("connected to database");
   }
 );
+
+mongoose.set("strictQuery", false);
 
 // Routes
 app.use("/users", router);
