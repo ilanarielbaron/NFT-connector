@@ -1,7 +1,4 @@
-# Awesome Project Build with TypeORM
+# API to save the users
 
-Steps to run this project:
-
-1. Run `npm i` command
-2. Setup database settings inside `data-source.ts` file
-3. Run `npm start` command
+1. yarn
+2. yarn start
