@@ -5,7 +5,7 @@ import {
   edit,
   insertNew,
   remove,
-} from "./controllers/ItemController";
+} from "./controllers/userController";
 
 const router = express.Router();
 

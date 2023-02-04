@@ -9,5 +9,5 @@ interface IUser {
   twitterVerified: boolean;
   twitterFollowed: string[];
   isRegistered: boolean;
-  anwers: Question[];
+  answers: Question[];
 }
