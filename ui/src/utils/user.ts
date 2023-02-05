@@ -1,6 +1,5 @@
 import { getUserByAddress, updateUser, verifyToken } from '../api/api';
 import { AppDispatch } from '../store';
-import { updateAnswers } from '../store/answersReducer';
 import {
 	connectAccount,
 	disconnectAccount,
@@ -27,11 +26,6 @@ export const syncUser = async (
 		);
 	} else {
 		dispatch(disconnectAccount());
-	}
-	if (user.answers) {
-		dispatch(updateAnswers({ answers: user.answers }));
-	} else {
-		dispatch(updateAnswers({ answers: [] }));
 	}
 	if (user.isRegistered) {
 		dispatch(registerUser());

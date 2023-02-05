@@ -2,14 +2,12 @@ import { Action, ThunkAction, configureStore } from '@reduxjs/toolkit';
 import userReducer from './userReducer';
 import twitterReducer from './twitterReducer';
 import walletReducer from './walletReducer';
-import answersReducer from './answersReducer';
 
 export const store = configureStore({
 	reducer: {
 		wallet: walletReducer,
 		twitter: twitterReducer,
 		user: userReducer,
-		answers: answersReducer,
 	},
 });
 
