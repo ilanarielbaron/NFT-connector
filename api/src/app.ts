@@ -11,9 +11,8 @@ const app = express();
 app.use(express.json({ limit: "10kb" }));
 
 // Allow all origins
-//TODO: CHANGE FOR THE UI IP
 app.all("/*", function (req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Origin", config.get('origin'));
   res.header("Access-Control-Allow-Headers", "Content-Type, authorization");
   res.header("Access-Control-Allow-Methods", "DELETE, PUT, GET, POST, PATCH");
   next();

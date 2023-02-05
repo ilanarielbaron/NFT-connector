@@ -35,7 +35,7 @@ export const QuestionsStep = () => {
 	return (
 		<Box sx={{ mb: '15px' }}>
 			<CaptchaModal values={answers} open={open} setOpen={setOpen} />
-			<Box sx={isActive ? activeStepBoxStyles : inactiveStepBoxStyles}>
+			<Box sx={isActive ? {...activeStepBoxStyles, display: 'block'} : inactiveStepBoxStyles}>
 				<Box sx={{ display: 'flex' }}>
 					<img src={inactiveTwitter} />
 					<Box sx={{ ml: '35px', color: isActive ? '' : '#bbbbbb' }}>
