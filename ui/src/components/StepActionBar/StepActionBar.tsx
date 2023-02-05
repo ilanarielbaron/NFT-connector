@@ -1,5 +1,6 @@
 import { Box, Link } from '@mui/material';
 import { ConnectButton } from '../ConnectButton';
+import { TwitterButton } from '../TwitterButton';
 
 interface StepActionBarProps {
 	step: 'WALLET_STEP' | 'TWITTER_STEP' | 'QUESTION_STEP'
@@ -10,9 +11,8 @@ export const StepActionBar = ({ step }: StepActionBarProps) => {
 		<Box bgcolor={'black'} sx={{ display: 'flex', justifyContent: 'flex-end', padding: '15px', borderRadius: '0px 0px 8px 8px ', mb: '15px' }}>
 			<Link href='#' underline='none'>
 				{step === 'WALLET_STEP' && <ConnectButton />}
+				{step === 'TWITTER_STEP' && <TwitterButton />}
 			</Link>
 		</Box>
 	);
 };
-
-
