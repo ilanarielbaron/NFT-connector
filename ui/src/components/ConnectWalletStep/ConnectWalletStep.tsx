@@ -24,7 +24,7 @@ export const ConnectWalletStep = () => {
 						<Box sx={{ display: 'flex' }}>
 							<img src={activeConnect} />
 							<Box sx={{ ml: '35px', overflow:'hidden'}}>
-								<Typography variant='h6' textOverflow={'ellipsis'}>{stepTitle}</Typography>
+								<Typography variant='h6' >{stepTitle}</Typography>
 								<Typography sx={stepDescriptionStlyes}>{stepDescription}</Typography>
 							</Box>
 						</Box>
