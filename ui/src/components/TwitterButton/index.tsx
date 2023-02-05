@@ -59,8 +59,8 @@ export const TwitterButton = () => {
 			</Snackbar>}
 			<Button
 				disabled={twitterIsLoading || twitterAccount?.isVerified}
-				variant='outlined'
-				sx={{ my: 1, mx: 1.5 }}
+				variant='text'
+				sx={{ color: 'white', fontSize:'24px', fontWeight:'400', p:0 }}
 				href={!twitterAccount?.accountUser ? redirectURL : ''}
 				onClick={onClick}
 			>
