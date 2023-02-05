@@ -8,7 +8,7 @@ interface StepActionBarProps {
 
 export const StepActionBar = ({ step }: StepActionBarProps) => {
 	return (
-		<Box bgcolor={'black'} sx={{ display: 'flex', justifyContent: 'flex-end', padding: '15px', borderRadius: '0px 0px 8px 8px ', mb: '15px' }}>
+		<Box bgcolor={'black'} sx={{ display: 'flex', justifyContent: 'flex-end', padding: '15px', borderRadius: '0px 0px 8px 8px '}}>
 			<Link href='#' underline='none'>
 				{step === 'WALLET_STEP' && <ConnectButton />}
 				{step === 'TWITTER_STEP' && <TwitterButton />}

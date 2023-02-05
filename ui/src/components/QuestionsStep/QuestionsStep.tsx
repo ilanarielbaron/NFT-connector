@@ -16,7 +16,7 @@ export const QuestionsStep = () => {
 	const isActive = !isRegistered && twitterAccount?.isVerified;
 
 	return (
-		<>
+		<Box sx={{ mb: '15px' }}>
 			<Box sx={isActive ? activeStepBoxStyles : inactiveStepBoxStyles}>
 				<Box sx={{ display: 'flex' }}>
 					<img src={inactiveTwitter} />
@@ -32,7 +32,8 @@ export const QuestionsStep = () => {
 					<Link href='#' underline='none'>
 						<AnswerButton />
 					</Link>
-				</Box>)}
-		</>
+				</Box>
+			)}
+		</Box>
 	);
 };

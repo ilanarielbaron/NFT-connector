@@ -13,7 +13,7 @@ export const ConnectWalletStep = () => {
 	const stepDescription = !isWalletConnected ? 'Start the whitelist process' : !wallet?.messageSigned ? 'Prove this is your wallet' : 'Wallet connected';
 
 	return (
-		<>
+		<Box sx={{mb: '15px'}}>
 			<Box sx={!wallet?.messageSigned ? activeStepBoxStyles : inactiveStepBoxStyles}>
 				<Box sx={{ display: 'flex' }}>
 					<img src={activeConnect} />
@@ -28,6 +28,6 @@ export const ConnectWalletStep = () => {
 				<StepActionBar step="WALLET_STEP" />
 			)
 			}
-		</>
+		</Box>
 	);
 };
