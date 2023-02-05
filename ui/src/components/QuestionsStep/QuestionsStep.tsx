@@ -1,12 +1,16 @@
 import { Box, Link, TextField, Typography } from '@mui/material';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
+import ReCAPTCHA from 'react-google-recaptcha';
+import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { useAppSelector } from '../../hooks/useAppSelector';
 import { selectAccount } from '../../store/twitterReducer';
-import { selectUserIsRegistered } from '../../store/userReducer';
+import { errorMessage, registerUser, selectUserIsRegistered } from '../../store/userReducer';
 import { AnswerButton } from '../AnswerButton';
 import CaptchaModal from '../Modal';
 import { activeStepBoxStyles, inactiveStepBoxStyles } from '../Pipeline/PipelineStyles';
 import inactiveTwitter from './inactive-questions.svg';
+import { selectWallet } from '../../store/walletReducer';
+import { finishRegistration } from '../../api/api';
 
 const QUESTIONS = [
 	{ id: 'game', question: 'What is your favorite role playing game?' },
@@ -15,12 +19,17 @@ const QUESTIONS = [
 ];
 
 export const QuestionsStep = () => {
-	const isRegistered = useAppSelector(selectUserIsRegistered);
-	const twitterAccount = useAppSelector(selectAccount);
 	const [answers, setAnswers] = useState<{ id: string, question: string, answer: string }[]>([]);
 	const [open, setOpen] = useState(false);
+	const captchaRef = useRef<ReCAPTCHA>(null);
+	const isRegistered = useAppSelector(selectUserIsRegistered);
+	const twitterAccount = useAppSelector(selectAccount);
+	const address = useAppSelector(selectWallet)?.address;
+	const dispatch = useAppDispatch();
 
 	const isActive = !isRegistered && twitterAccount?.isVerified;
+
+	const onClose = () => setOpen(false);
 
 	const onChange = (id: string, question: string, value: string) => {
 		setAnswers((prevAnswers) => {
@@ -32,10 +41,31 @@ export const QuestionsStep = () => {
 		});
 	};
 
+	const onSubmit = async () => {
+		if (captchaRef.current) {
+			const token = captchaRef.current.getValue();
+
+			if (token && address) {
+				const parsedValues = answers.map(({ question, answer }) => ({ question, answer }));
+				const response = await finishRegistration(address, parsedValues);
+
+				if (!response) {
+					dispatch(errorMessage({ message: 'There is an error finishing the registration' }));
+					onClose();
+
+					return;
+				}
+
+				dispatch(registerUser());
+				onClose();
+			}
+		}
+	};
+
 	return (
 		<Box sx={{ mb: '15px' }}>
-			<CaptchaModal values={answers} open={open} setOpen={setOpen} />
-			<Box sx={isActive ? {...activeStepBoxStyles, display: 'block'} : inactiveStepBoxStyles}>
+			<CaptchaModal values={answers} open={open} setOpen={setOpen} captchaRef={captchaRef} handleClose={onClose} onSubmit={onSubmit} />
+			<Box sx={isActive ? { ...activeStepBoxStyles, display: 'block' } : inactiveStepBoxStyles}>
 				<Box sx={{ display: 'flex' }}>
 					<img src={inactiveTwitter} />
 					<Box sx={{ ml: '35px', color: isActive ? '' : '#bbbbbb' }}>
@@ -70,7 +100,7 @@ export const QuestionsStep = () => {
 			{isActive && (
 				<Box bgcolor={'black'} sx={{ display: 'flex', justifyContent: 'flex-end', padding: '15px', borderRadius: '0px 0px 8px 8px ', mb: '15px' }}>
 					<Link href='#' underline='none'>
-						<AnswerButton setOpen={setOpen}/>
+						<AnswerButton setOpen={setOpen} />
 					</Link>
 				</Box>
 			)}

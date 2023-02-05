@@ -1,12 +1,6 @@
-import { useCallback, useRef } from 'react';
 import { Box, Typography } from '@mui/material';
 import Modal from '@mui/material/Modal';
 import ReCAPTCHA from 'react-google-recaptcha';
-import { finishRegistration } from '../../api/api';
-import { useAppSelector } from '../../hooks/useAppSelector';
-import { selectWallet } from '../../store/walletReducer';
-import { useAppDispatch } from '../../hooks/useAppDispatch';
-import { errorMessage, registerUser } from '../../store/userReducer';
 
 const style = {
 	position: 'absolute' as const,
@@ -23,36 +17,13 @@ const style = {
 interface Props {
 	open: boolean;
 	setOpen: (value: boolean) => void;
-	values: { id: string, question: string, answer: string }[]
-}
+	values: { id: string, question: string, answer: string }[];
+	handleClose: () => void;
+	onSubmit: () => void;
+	captchaRef: React.RefObject<ReCAPTCHA>;
+} 
 
-export default function CaptchaModal({ open, setOpen, values }: Props) {
-	const handleClose = () => setOpen(false);
-	const dispatch = useAppDispatch();
-	const captchaRef = useRef<ReCAPTCHA>(null);
-	const address = useAppSelector(selectWallet)?.address;
-
-	const onChange = useCallback(async () => {
-		if (captchaRef.current) {
-			const token = captchaRef.current.getValue();
-
-			if (token && address) {
-				const parsedValues = values.map(({ question, answer }) => ({ question, answer }));
-				const response = await finishRegistration(address, parsedValues);
-
-				if (!response) {
-					dispatch(errorMessage({ message: 'There is an error finishing the registration' }));
-					handleClose();
-
-					return;
-				}
-
-				handleClose();
-				dispatch(registerUser());
-			}
-		}
-	}, [address, captchaRef, values, dispatch]);
-
+export default function CaptchaModal({ open, handleClose, onSubmit, captchaRef }: Props) {
 	return (
 		<div>
 			<Modal
@@ -65,7 +36,7 @@ export default function CaptchaModal({ open, setOpen, values }: Props) {
 					<Typography id="modal-modal-title" variant="h5">
 						Prove you are real
 					</Typography>
-					<ReCAPTCHA onChange={onChange} sitekey={process.env.REACT_APP_RECAPTCHA_KEY ?? ''} ref={captchaRef} />
+					<ReCAPTCHA onChange={onSubmit} sitekey={process.env.REACT_APP_RECAPTCHA_KEY ?? ''} ref={captchaRef} />
 				</Box>
 			</Modal>
 		</div>

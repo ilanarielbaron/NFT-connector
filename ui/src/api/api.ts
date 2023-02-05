@@ -155,7 +155,7 @@ export const finishRegistration = async (
 		);
 		if (!response) return null;
 
-		return response.data?.token;
+		return response.data?.user;
 	} catch (err) {
 		return null;
 	}

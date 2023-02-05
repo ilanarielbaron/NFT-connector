@@ -54,7 +54,7 @@ const Home = () => {
 					{error}
 				</Alert>
 			</Snackbar>}
-			<Main userIsRegistered={userIsRegistered}/>;
+			<Main userIsRegistered={userIsRegistered} />;
 		</>);
 };
 
