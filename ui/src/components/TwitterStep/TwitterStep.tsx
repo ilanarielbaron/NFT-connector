@@ -4,7 +4,8 @@ import { selectAccount, selectTwitterIsLoading } from '../../store/twitterReduce
 import { selectWallet } from '../../store/walletReducer';
 import { activeStepBoxStyles, inactiveStepBoxStyles } from '../Pipeline/PipelineStyles';
 import { StepActionBar } from '../StepActionBar/StepActionBar';
-import inactiveTwitter from './inactive-twitter.svg';
+import inactiveTwitterIcon from './inactive-twitter.svg';
+import activeTwitterIcon from './active-twitter.svg';
 
 export const TwitterStep = () => {
 	const wallet = useAppSelector(selectWallet);
@@ -21,12 +22,12 @@ export const TwitterStep = () => {
 	};
 
 	return (
-		<>
+		<Box sx={{mb: '15px'}}>
 			<Box sx={isActive ? activeStepBoxStyles : inactiveStepBoxStyles}>
 				<Box sx={{ display: 'flex' }}>
-					<img src={inactiveTwitter} />
-					<Box sx={{ ml: '35px', color: isActive ? '' : '#bbbbbb' }}>
-						<Typography variant='h5'>Follow <Link href='#' color="inherit">DimensionalsRPG</Link>, and <Link href="#" color="inherit">SashaMackinnon</Link>
+					<img src={isActive ? activeTwitterIcon : inactiveTwitterIcon} />
+					<Box sx={{ ml: '35px', color: isActive ? '' : '#bbbbbb', overflow:'hidden' }}>
+						<Typography variant='h6'>Follow <Link href='#' color="inherit">DimensionalsRPG</Link>, and <Link href="#" color="inherit">SashaMackinnon</Link>
 						</Typography>
 						<Typography >And connect your twitter</Typography>
 					</Box>
@@ -36,6 +37,6 @@ export const TwitterStep = () => {
 			{isActive && (
 				<StepActionBar step="TWITTER_STEP" />
 			)}
-		</>
+		</Box>
 	);
 };

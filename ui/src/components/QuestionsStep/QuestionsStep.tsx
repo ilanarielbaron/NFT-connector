@@ -8,7 +8,7 @@ export const QuestionsStep = ()=>{
 	const [activeStep, setActiveStep] = useState(false);
 
 	return (
-		<>
+		<Box sx={{mb: '15px'}}>
 		    <Box sx={activeStep ? activeStepBoxStyles : inactiveStepBoxStyles}>
 				<Box sx={{display:'flex'}}>
 					<img src={inactiveTwitter}/>
@@ -29,6 +29,6 @@ export const QuestionsStep = ()=>{
 				</Link>
 			) 
 			}
-		</>
+		</Box>
 	);
 };
