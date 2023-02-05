@@ -18,6 +18,7 @@ app.all("/*", function (req, res, next) {
   res.header("Access-Control-Allow-Methods", "DELETE, PUT, GET, POST, PATCH");
   next();
 });
+app.get('/', (req, res) => res.send('v0.0.1'));
 
 mongoose.connect(
   `mongodb+srv://${config.get("mongoUser")}:${config.get(

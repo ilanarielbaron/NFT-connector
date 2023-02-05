@@ -1,32 +1,34 @@
 {
-   "name": "api",
-   "version": "1.0.0",
-   "main": "index.js",
-   "license": "MIT",
-   "devDependencies": {
-      "@types/config": "^3.3.0",
-      "@types/express": "^4.17.16",
-      "@types/jsonwebtoken": "^9.0.1",
-      "@types/mongoose": "^5.11.97",
-      "@types/node": "^16.11.10",
-      "@typescript-eslint/eslint-plugin": "^5.50.0",
-      "@typescript-eslint/parser": "^5.50.0",
-      "eslint": "^8.33.0",
-      "ts-node": "10.7.0",
-      "ts-node-dev": "^2.0.0",
-      "typescript": "4.5.2"
-   },
-   "dependencies": {
-      "config": "^3.3.9",
-      "dotenv": "^16.0.3",
-      "envalid": "^7.3.1",
-      "express": "^4.17.2",
-      "jsonwebtoken": "^9.0.0",
-      "mongoose": "^6.9.0",
-      "reflect-metadata": "^0.1.13"
-   },
-   "scripts": {
-      "start": "ts-node-dev --respawn --transpile-only --exit-child src/app.ts",
-      "lint:fix": "eslint . --fix"
-   }
+  "name": "api",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/config": "^3.3.0",
+    "@types/express": "^4.17.16",
+    "@types/jsonwebtoken": "^9.0.1",
+    "@types/mongoose": "^5.11.97",
+    "@types/node": "^16.11.10",
+    "@typescript-eslint/eslint-plugin": "^5.50.0",
+    "@typescript-eslint/parser": "^5.50.0",
+    "eslint": "^8.33.0",
+    "ts-node": "10.7.0",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "4.5.2"
+  },
+  "dependencies": {
+    "config": "^3.3.9",
+    "dotenv": "^16.0.3",
+    "envalid": "^7.3.1",
+    "express": "^4.17.2",
+    "jsonwebtoken": "^9.0.0",
+    "mongoose": "^6.9.0",
+    "reflect-metadata": "^0.1.13"
+  },
+  "scripts": {
+    "start:dev": "ts-node-dev --respawn --transpile-only --exit-child src/app.ts",
+    "start": "node build/src/app.js",
+    "build": "tsc -p tsconfig.json",
+    "lint:fix": "eslint . --fix"
+  }
 }
