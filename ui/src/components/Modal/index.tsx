@@ -42,9 +42,12 @@ export default function CaptchaModal({ open, setOpen, values }: Props) {
 
 				if(!response) {
 					dispatch(errorMessage({message: 'There is an error finishing the registration'}));
+					handleClose();
+
 					return;
 				}
 
+				handleClose();
 				dispatch(registerUser());
 			}
 		}
