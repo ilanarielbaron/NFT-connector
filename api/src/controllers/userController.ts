@@ -104,3 +104,44 @@ export async function updateUser(req: Request, res: Response) {
     });
   }
 }
+
+/** register user */
+export async function finishRegistration(req: Request, res: Response) {
+  try {
+    const {answers, publicAddress} = req.body.user;
+
+    if (!publicAddress)
+      return res.status(401).json({
+        status: "fail",
+        message: "Public address is needed",
+      });
+
+    const userRecord = await User.findOne({
+      publicAddress: publicAddress,
+    });
+
+    if (!userRecord)
+      return res.status(401).json({
+        status: "fail",
+        message: "Error finding the user",
+      });
+
+    //TODO: improve this
+    userRecord.isRegistered = true;
+    userRecord.answers = answers ?? [];
+
+    await userRecord.save();
+
+    return res.status(200).json({
+      status: "success",
+      data: {
+        user: userRecord,
+      },
+    });
+  } catch (error: unknown) {
+    return res.status(409).json({
+      status: "fail",
+      message: "Error getting the user",
+    });
+  }
+}
