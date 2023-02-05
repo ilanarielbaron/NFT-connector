@@ -108,16 +108,16 @@ export async function updateUser(req: Request, res: Response) {
 /** register user */
 export async function finishRegistration(req: Request, res: Response) {
   try {
-    const {answers, publicAddress} = req.body.user;
+    const {answers, address} = req.body;
 
-    if (!publicAddress)
+    if (!address)
       return res.status(401).json({
         status: "fail",
         message: "Public address is needed",
       });
 
     const userRecord = await User.findOne({
-      publicAddress: publicAddress,
+      publicAddress: address,
     });
 
     if (!userRecord)
@@ -126,7 +126,6 @@ export async function finishRegistration(req: Request, res: Response) {
         message: "Error finding the user",
       });
 
-    //TODO: improve this
     userRecord.isRegistered = true;
     userRecord.answers = answers ?? [];
 
@@ -141,7 +140,7 @@ export async function finishRegistration(req: Request, res: Response) {
   } catch (error: unknown) {
     return res.status(409).json({
       status: "fail",
-      message: "Error getting the user",
+      message: "Error finishing the registration",
     });
   }
 }

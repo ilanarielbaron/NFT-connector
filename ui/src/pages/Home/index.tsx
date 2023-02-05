@@ -11,7 +11,7 @@ import { userIsConnected } from '../../utils/user';
 const Home = () => {
 	const dispatch = useAppDispatch();
 	//const wallet = useAppSelector(selectWallet);
-	const [searchParams, setParams] = useSearchParams();
+	const params = useSearchParams();
 
 	const accountChangeMetamask = useCallback(async (address: string[]): Promise<void> => {
 		accountChanged(address[0], dispatch);
@@ -26,7 +26,7 @@ const Home = () => {
 			//@ts-expect-error out of typescript scope
 			window.ethereum.on('chainChanged', chainChanged);
 
-			const twitterCode = searchParams.get('code');
+			const twitterCode = params[0].get('code');
 
 			userIsConnected(dispatch, twitterCode);
 		}

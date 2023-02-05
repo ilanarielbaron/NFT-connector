@@ -22,6 +22,7 @@ const userSlice = createSlice({
 		registerUser: (state): void => {
 			state.isRegistered = true;
 			state.errorMessage = undefined;
+			state.isLoading = false;
 		},
 		logoutUser: (state): void => {
 			state.isRegistered = false;

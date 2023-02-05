@@ -5,6 +5,8 @@ import ReCAPTCHA from 'react-google-recaptcha';
 import { finishRegistration } from '../../api/api';
 import { useAppSelector } from '../../hooks/useAppSelector';
 import { selectWallet } from '../../store/walletReducer';
+import { useAppDispatch } from '../../hooks/useAppDispatch';
+import { errorMessage, registerUser } from '../../store/userReducer';
 
 const style = {
 	position: 'absolute' as const,
@@ -26,20 +28,27 @@ interface Props {
 
 export default function CaptchaModal({ open, setOpen, values }: Props) {
 	const handleClose = () => setOpen(false);
+	const dispatch = useAppDispatch();
 	const captchaRef = useRef<ReCAPTCHA>(null);
 	const address = useAppSelector(selectWallet)?.address;
 
 	const onChange = useCallback(async () => {
-		console.log('chabge');
 		if (captchaRef.current) {
 			const token = captchaRef.current.getValue();
 
 			if (token && address) {
 				const parsedValues = values.map(({ question, answer }) => ({ question, answer }));
-				await finishRegistration(address, parsedValues);
+				const response = await finishRegistration(address, parsedValues);
+
+				if(!response) {
+					dispatch(errorMessage({message: 'There is an error finishing the registration'}));
+					return;
+				}
+
+				dispatch(registerUser());
 			}
 		}
-	}, [address, captchaRef, values]);
+	}, [address, captchaRef, values, dispatch]);
 
 	return (
 		<div>
