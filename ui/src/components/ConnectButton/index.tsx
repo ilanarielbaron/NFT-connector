@@ -26,11 +26,11 @@ export const ConnectButton = () => {
 	return (
 		<Button
 			disabled={isLoading}
-			variant='outlined'
-			sx={{ my: 1, mx: 1.5 }}
+			variant='text'
+			sx={{ color: 'white', fontSize:'24px', fontWeight:'400', p:0 }}
 			onClick={onClick}
 		>
-			{isLoading ? 'loading' : isConnected ? (wallet?.messageSigned ? wallet?.address : 'Sign') : 'Connect'}
+			{isLoading ? 'loading' : isConnected ? (wallet?.messageSigned ? wallet?.address : 'Sign') : 'Connect'}	
 		</Button>
 	);
 };
