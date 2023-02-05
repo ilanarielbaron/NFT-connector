@@ -2,7 +2,7 @@ import express from "express";
 import {
   generateRandomNumber,
   generateToken,
-  verify
+  verify,
 } from "./controllers/authenticationController";
 
 const router = express.Router();

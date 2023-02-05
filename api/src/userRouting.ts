@@ -8,6 +8,6 @@ import {
 const router = express.Router();
 
 router.route("/:address").get(getUserByAddress).patch(updateUser);
-router.route("/").post(createUser);
+router.route("/").post(createUser).patch(updateUser);
 
 export default router;
