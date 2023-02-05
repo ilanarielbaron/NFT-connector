@@ -4,6 +4,7 @@ import { selectWallet, selectWalletIsConnected } from '../../store/walletReducer
 import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { connectHandler, signAccount } from '../../utils/metamask';
 import { selectWalletIsLoading } from '../../store/walletReducer';
+import  actionArrow  from './action-arrow.svg';
 
 export const ConnectButton = () => {
 	const dispatch = useAppDispatch();
@@ -31,6 +32,10 @@ export const ConnectButton = () => {
 			onClick={onClick}
 		>
 			{isLoading ? 'loading' : isConnected ? (wallet?.messageSigned ? wallet?.address : 'Sign') : 'Connect'}	
+			
+			{!isLoading &&
+				<img src={actionArrow} alt="Action arrow" style={{marginLeft:'15px'}}/>
+			}
 		</Button>
 	);
 };
