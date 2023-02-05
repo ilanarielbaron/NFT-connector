@@ -1,7 +1,5 @@
-import { AppBar, Link, Box, Typography, Grid } from '@mui/material';
-import { ConnectButton } from '../ConnectButton';
+import { Link, Box } from '@mui/material';
 import { NavBarAccordion } from '../NavBarAccordion/NavBarAccordion';
-import { TwitterButton } from '../TwitterButton';
 import logo from './logo.svg';
 
 export const NavBar = () => {
@@ -14,10 +12,6 @@ export const NavBar = () => {
 			</Box>
 			<Box>
 				<NavBarAccordion />
-			</Box>
-			<Box>
-				<ConnectButton />
-				<TwitterButton />
 			</Box>
 		</Box>
 	);
