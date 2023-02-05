@@ -29,7 +29,7 @@ export const TwitterStep = () => {
 					<Grid item xs={12} md={8}>
 						<Box sx={{ display: 'flex', overflow:'hidden' }}>
 							<img src={isActive ? activeTwitterIcon : twitterAccount?.isVerified ? activeTwitterIcon : inactiveTwitterIcon } />
-							<Box sx={{ ml: '35px', color: isActive ? '' : '#bbbbbb', overflow:'hidden' }}>
+							<Box sx={{ ml: '35px', color: isActive ? '' : twitterAccount?.isVerified ? '' : '#bbbbbb', overflow:'hidden' }}>
 								<Typography variant='h6'>
 									{'Follow '} 
 									<Link href='https://twitter.com/DimensionalsRPG' target="_blank" rel="noopener" color="inherit">DimensionalsRPG</Link>
