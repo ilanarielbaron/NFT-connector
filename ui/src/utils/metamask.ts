@@ -1,6 +1,5 @@
 import { createUser, fetchRandomUUID, generateToken, getUserByAddress } from '../api/api';
 import { AppDispatch } from '../store';
-import { updateAnswers } from '../store/answersReducer';
 import { disconnectAccount } from '../store/twitterReducer';
 import { errorMessage, logoutUser } from '../store/userReducer';
 import { disconnectWallet, signMessage, unSignMessage } from '../store/walletReducer';
@@ -37,7 +36,6 @@ export const disconnectAll = (dispatch: AppDispatch): void => {
 	dispatch(disconnectWallet());
 	dispatch(logoutUser());
 	dispatch(disconnectAccount());
-	dispatch(updateAnswers({answers: []}));
 };
 
 //Sign the message with Metamask
