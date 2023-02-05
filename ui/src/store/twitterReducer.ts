@@ -27,10 +27,12 @@ export const nftsSlice = createSlice({
 				isVerified: action.payload.isVerified,
 				twitterIdsFollowed: action.payload.twitterIdsFollowed
 			};
+			state.twitterError = '';
 		},
 		disconnectAccount: (state): void => {
 			state.account = null;
 			state.isConnected = false;
+			state.twitterError = '';
 		},
 		setTwitterError: (state, action: PayloadAction<{ error: string }>): void => {
 			state.twitterError = action.payload.error;
@@ -40,6 +42,7 @@ export const nftsSlice = createSlice({
 		},
 		toggleLoading: (state,action: PayloadAction<{ isLoading: boolean }>, ): void => {
 			state.isLoading = action.payload.isLoading;
+			state.twitterError = '';
 		},
 	},
 });
