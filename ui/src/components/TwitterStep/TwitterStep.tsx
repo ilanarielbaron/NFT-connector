@@ -12,17 +12,13 @@ export const TwitterStep = () => {
 	const wallet = useAppSelector(selectWallet);
 	const twitterAccount = useAppSelector(selectAccount);
 	const isLoading = useAppSelector(selectTwitterIsLoading);
-
-	// const isActive = wallet?.messageSigned && !twitterAccount?.isVerified;
-
-	const stepStatus : StepStatus = twitterAccount?.isVerified ? 'INACTIVE_COMPLETED' : wallet?.messageSigned ? 'ACTIVE' : 'INACTIVE_INCOMPLETE';
-
+	const stepStatus: StepStatus = twitterAccount?.isVerified ? 'INACTIVE_COMPLETED' : wallet?.messageSigned ? 'ACTIVE' : 'INACTIVE_INCOMPLETE';
 
 	const stepTitle = (<>
-		{'Follow '} 
+		{'Follow '}
 		<Link href='https://twitter.com/DimensionalsRPG' target="_blank" rel="noopener" color={'inherit'}>DimensionalsRPG</Link>
 		{', and '}
-		<Link href='https://twitter.com/SashaMackinnon' target="_blank" rel="noopener"  color="inherit">SashaMackinnon</Link>
+		<Link href='https://twitter.com/SashaMackinnon' target="_blank" rel="noopener" color="inherit">SashaMackinnon</Link>
 	</>
 	);
 	const stepDescription = 'And connect your twitter';
@@ -31,7 +27,7 @@ export const TwitterStep = () => {
 	let stepDescriptionStlyes = {};
 	let titleStyles = {};
 
-	switch(stepStatus){
+	switch (stepStatus) {
 	case 'ACTIVE':
 		stepContainerStyles = activeStepBoxStyles;
 		iconColor = commonColors.activeTwitter;
@@ -51,8 +47,6 @@ export const TwitterStep = () => {
 		titleStyles = activeTitleStyles;
 		break;
 	}
-	
-
 
 	if (isLoading) {
 		return (
@@ -62,13 +56,13 @@ export const TwitterStep = () => {
 	};
 
 	return (
-		<Box sx={{mb: '15px'}}>
+		<Box sx={{ mb: '15px' }}>
 			<Box sx={stepContainerStyles}>
 				<Grid container spacing={2} >
 					<Grid item xs={12} md={8}>
-						<Box sx={{ display: 'flex', alignItems:'center' }}>
-							<TwitterIcon sx={{fontSize: '5rem', color: iconColor}} />
-							<Box sx={{ ml: '35px', overflow:'hidden' }}>
+						<Box sx={{ display: 'flex', alignItems: 'center' }}>
+							<TwitterIcon sx={{ fontSize: '5rem', color: iconColor }} />
+							<Box sx={{ ml: '35px', overflow: 'hidden' }}>
 								<Typography variant='h6' sx={titleStyles}>{stepTitle}</Typography>
 								<Typography sx={stepDescriptionStlyes}>{stepDescription}</Typography>
 							</Box>
@@ -76,10 +70,8 @@ export const TwitterStep = () => {
 					</Grid>
 
 					{twitterAccount?.isVerified && (
-						<Grid item xs={12} md={4}>
-							<Box sx={{float:'right'}}>
-								<ConnectedSign/>
-							</Box>
+						<Grid item xs={12} md={4} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
+							<ConnectedSign />
 						</Grid>
 					)}
 				</Grid>
