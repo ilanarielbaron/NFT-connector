@@ -40,8 +40,8 @@ export default function CaptchaModal({ open, setOpen, values }: Props) {
 				const parsedValues = values.map(({ question, answer }) => ({ question, answer }));
 				const response = await finishRegistration(address, parsedValues);
 
-				if(!response) {
-					dispatch(errorMessage({message: 'There is an error finishing the registration'}));
+				if (!response) {
+					dispatch(errorMessage({ message: 'There is an error finishing the registration' }));
 					handleClose();
 
 					return;

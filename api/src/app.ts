@@ -4,6 +4,7 @@ import config from "config";
 import mongoose from "mongoose";
 import userRouter from "./userRouting";
 import authenticationRouter from "./authenticationRouting";
+import twitterRouter from "./twitterRouting";
 
 const app = express();
 
@@ -33,6 +34,7 @@ mongoose.set("strictQuery", false);
 // Routes
 app.use("/users", userRouter);
 app.use("/authentication", authenticationRouter);
+app.use("/twitter", twitterRouter);
 const port = config.get<number>("port");
 app.listen(port);
 
