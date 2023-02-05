@@ -1,0 +1,1 @@
+export type StepStatus = 'INACTIVE_INCOMPLETE' | 'INACTIVE_COMPLETED' | 'ACTIVE'
