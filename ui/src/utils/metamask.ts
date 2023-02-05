@@ -5,22 +5,7 @@ import { disconnectAccount } from '../store/twitterReducer';
 import { errorMessage, logoutUser } from '../store/userReducer';
 import { disconnectWallet, signMessage, unSignMessage } from '../store/walletReducer';
 import { callAPI } from './api';
-import { connectUser, syncUser } from './user';
-
-export const userIsConnected = async (dispatch: AppDispatch): Promise<void> => {
-	try {
-		//@ts-expect-error out of typescript scope
-		const accounts = await window.ethereum.request({
-			method: 'eth_accounts',
-		});
-		if (accounts?.length > 0) {
-			const token = localStorage.getItem('token');
-			await connectUser(dispatch, accounts[0], token);
-		}
-	} catch (err) {
-		dispatch(errorMessage({ message: 'There was a problem connecting to metamask' }));
-	}
-};
+import { syncUser } from './user';
 
 export const accountChanged = async (address: string, dispatch: AppDispatch): Promise<void> => {
 	await callAPI(dispatch, async()=> {
