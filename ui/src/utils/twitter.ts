@@ -18,18 +18,20 @@ export const fetchMeAndFollowing = async (
 	dispatch: AppDispatch,
 	user: User,
 ) => {
-	const { error, following, userId } = await fetchFollowed(twitterAuthToken);
+	const response = await fetchFollowed(twitterAuthToken);
 
-	if (error) {
+	if (!response) {
 		await twitterError(dispatch, user);
 
 		return;
 	}
 
-	const accountVerified = following?.every((follow) =>
-		accountsIds.includes(follow)
-	);
+	const {following, userId} = response;
 
+	const accountVerified = accountsIds.every((follow) =>
+		following?.includes(follow)
+	);
+	
 	if (!userId) {
 		await twitterError(dispatch, user);
 

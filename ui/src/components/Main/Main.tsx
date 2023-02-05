@@ -17,7 +17,7 @@ export const Main = ({ userIsRegistered }: Props) => (
 			</Link>
 		</Box>
 		<Box sx={{ marginY: '3rem' }}>
-			<img src={banner} style={{maxWidth: '100%', borderRadius:'5px'}}></img>
+			{userIsRegistered && <img src={banner} style={{ maxWidth: '100%', borderRadius: '5px' }}></img>}
 			<Grid container spacing={2} marginTop={10}>
 				<Grid item xs={12} md={6}>
 					<Typography variant='h3' sx={{ fontSize: '3rem', lineHeight: '60px', mt: '-15px' }} >{userIsRegistered && 'You are registered for '}Genesis Dimensional Stones</Typography>

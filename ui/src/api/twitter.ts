@@ -1,54 +1,55 @@
-const TWITTER_URL = 'https://api.twitter.com/2/';
+const BASE_URL = process.env.REACT_APP_API_URL ?? 'localhost:8000';
 
-export const getTwitterAuthToken = async (code: string): Promise<string | null> => {
+export const getTwitterAuthToken = async (
+	code: string
+): Promise<string | null> => {
 	const requestOptions = {
 		method: 'POST',
 		headers: {
-			'Content-Type': 'application/x-www-form-urlencoded',
+			'Content-Type': 'application/json',
 		},
-		body: new URLSearchParams({
+		body: JSON.stringify({
 			code,
-			'grant_type': 'authorization_code',
-			'client_id': process.env.REACT_APP_TWITTER_CLIENT_ID ?? '',
-			'redirect_uri': process.env.REACT_APP_BASE_URL ?? '',
-			'code_verifier': 'challenge',
 		}),
 	};
 
-	const url = `${TWITTER_URL}oauth2/token`;
+	const url = `${BASE_URL}twitter/authToken`;
 
 	try {
-		const response = await fetch(url, requestOptions).then((data) => data.json());
-		if (!response['access_token']) return null;
+		const response = await fetch(url, requestOptions).then((data) =>
+			data.json()
+		);
+		if (!response) return null;
 
-		return response['access_token'];
-	} catch(err) {
+		return response.data?.token;
+	} catch (err) {
 		return null;
 	}
 };
 
-export const fetchFollowed = async (token: string): Promise<{userId?: string, following?: string[], error: boolean}> => {
+export const fetchFollowed = async (
+	token: string
+): Promise<{ following: string[]; userId: string } | null> => {
 	const requestOptions = {
-		method: 'GET',
+		method: 'POST',
 		headers: {
-			Authorization: `Bearer ${token}`,
+			'Content-Type': 'application/json',
 		},
+		body: JSON.stringify({
+			token,
+		}),
 	};
 
-	let url = `${TWITTER_URL}users/me`;
+	const url = `${BASE_URL}twitter/fetchFollowed`;
 
 	try {
-		const response = await fetch(url, requestOptions).then((data) => data.json());
-		if (!response?.data?.id) return {error: true};
+		const response = await fetch(url, requestOptions).then((data) =>
+			data.json()
+		);
+		if (!response) return null;
 
-		url = `${TWITTER_URL}users/${response.data.id}/following`;
-
-		const followingResponse = await fetch(url, requestOptions).then((data) => data.json());
-
-		const following = followingResponse?.data ?? [];
-
-		return {error: false, userId: response.data.id, following};
-	} catch(err) {
-		return {error: true};;
+		return response.data;
+	} catch (err) {
+		return null;
 	}
 };
