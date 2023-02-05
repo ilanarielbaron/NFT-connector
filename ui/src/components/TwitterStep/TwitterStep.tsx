@@ -1,11 +1,9 @@
 import { Box, Typography, Link, CircularProgress } from '@mui/material';
-import { useState } from 'react';
 import { useAppSelector } from '../../hooks/useAppSelector';
 import { selectAccount, selectTwitterIsLoading } from '../../store/twitterReducer';
 import { selectWallet } from '../../store/walletReducer';
 import { activeStepBoxStyles, inactiveStepBoxStyles } from '../Pipeline/PipelineStyles';
 import { StepActionBar } from '../StepActionBar/StepActionBar';
-import actionArrow from './action-arrow.svg';
 import inactiveTwitter from './inactive-twitter.svg';
 
 export const TwitterStep = () => {
@@ -37,9 +35,7 @@ export const TwitterStep = () => {
 
 			{isActive && (
 				<StepActionBar step="TWITTER_STEP" />
-
-			)
-			}
+			)}
 		</>
 	);
 };
