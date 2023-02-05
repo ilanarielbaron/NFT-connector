@@ -1,7 +1,7 @@
 import { Box, Typography } from '@mui/material';
 import { useAppSelector } from '../../hooks/useAppSelector';
 import { selectWallet, selectWalletIsConnected } from '../../store/walletReducer';
-import { activeStepBoxStyles, inactiveStepBoxStyles } from '../Pipeline/PipelineStyles';
+import { activeStepBoxStyles, inactiveStepBoxStyles, stepDescriptionStlyes } from '../Pipeline/PipelineStyles';
 import { StepActionBar } from '../StepActionBar/StepActionBar';
 import activeConnect from './active-connect.svg';
 
@@ -17,9 +17,9 @@ export const ConnectWalletStep = () => {
 			<Box sx={!wallet?.messageSigned ? activeStepBoxStyles : inactiveStepBoxStyles}>
 				<Box sx={{ display: 'flex' }}>
 					<img src={activeConnect} />
-					<Box sx={{ ml: '35px' }}>
-						<Typography variant='h5'>{stepTitle}</Typography>
-						<Typography sx={{ color: 'rgb(102 102 102)' }}>{stepDescription}</Typography>
+					<Box sx={{ ml: '35px', overflow:'hidden' }}>
+						<Typography variant='h6'>{stepTitle}</Typography>
+						<Typography sx={stepDescriptionStlyes}>{stepDescription}</Typography>
 					</Box>
 				</Box>
 			</Box>
