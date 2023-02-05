@@ -14,7 +14,7 @@ export const ConnectWalletStep = () => {
 
 	const stepTitle = !isWalletConnected ? 'Connect your wallet' : !wallet?.messageSigned ? 'Sign a message' : wallet.address;
 	const stepDescription = !isWalletConnected ? 'Start the whitelist process' : !wallet?.messageSigned ? 'Prove this is your wallet' : 'Wallet connected';
-	const actionName = !isWalletConnected ? 'CONNECT' : 'SIGN';
+
 
 	return (
 		<>
@@ -28,9 +28,9 @@ export const ConnectWalletStep = () => {
 				</Box>
 			</Box>
 
-			{isStepActive && (
-				<StepActionBar step="WALLET_STEP" />
-			)
+			{isStepActive && !wallet?.messageSigned && (
+				<StepActionBar step="WALLET_STEP"/>
+			) 
 			}
 		</>
 	);
