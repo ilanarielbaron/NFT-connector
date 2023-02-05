@@ -6,6 +6,7 @@ import { useAppSelector } from '../../hooks/useAppSelector';
 import { selectAccount, selectTwitterError, selectTwitterIsLoading, toggleLoading } from '../../store/twitterReducer';
 import { selectWallet } from '../../store/walletReducer';
 import { fetchMeAndFollowing, getTwitterRedirectURL } from '../../utils/twitter';
+import actionArrow from './action-arrow.svg';
 
 export const TwitterButton = () => {
 	const dispatch = useAppDispatch();
@@ -60,12 +61,15 @@ export const TwitterButton = () => {
 			<Button
 				disabled={twitterIsLoading || twitterAccount?.isVerified}
 				variant='text'
-				sx={{ color: 'white', fontSize:'24px', fontWeight:'400', p:0 }}
+				sx={{ color: 'white', fontSize:'20px', fontWeight:'400', p:0 }}
 				href={!twitterAccount?.accountUser ? redirectURL : ''}
 				onClick={onClick}
 			>
 				{twitterIsLoading && 'Loading'}
-				{!twitterIsLoading && (twitterAccount?.isVerified ? 'Account Verified' : accountLoggedButNotVerified ? 'Verify' : 'Connect Twitter')}
+				{!twitterIsLoading && (twitterAccount?.isVerified ? 'Account Verified' : accountLoggedButNotVerified ? 'Verify' : 'CONNECT & VERIFY')}
+				{!twitterIsLoading &&
+				<img src={actionArrow} alt="Action arrow" style={{marginLeft:'15px'}}/>
+				}
 			</Button>
 		</>
 	);

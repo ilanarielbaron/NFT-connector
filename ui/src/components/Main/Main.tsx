@@ -5,7 +5,7 @@ import twitterIcon from './twitterIcon.svg';
 export const Main = () => (
 	<Box sx={{ marginLeft: '3%' }}>
 		<Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-			<Link href="#">
+			<Link href="https://twitter.com/DimensionalsRPG" target="_blank" rel="noopener">
 				<Box sx={{ borderRadius: '8px', boxShadow: 'rgb(0 0 0 / 10%) 0px 4px 40px', padding: '8px 15px 0px 15px' }}>
 					<img src={twitterIcon} alt="twitter icon" />
 				</Box>
