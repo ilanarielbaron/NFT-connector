@@ -4,13 +4,13 @@ import { useSearchParams } from 'react-router-dom';
 import { Main } from '../../components/Main/Main';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { useAppSelector } from '../../hooks/useAppSelector';
-import { selectErrorMessage, selectUserIsLoading } from '../../store/userReducer';
+import { selectErrorMessage, selectUserIsLoading, selectUserIsRegistered } from '../../store/userReducer';
 import { accountChanged, chainChanged } from '../../utils/metamask';
 import { userIsConnected } from '../../utils/user';
 
 const Home = () => {
 	const dispatch = useAppDispatch();
-	//const wallet = useAppSelector(selectWallet);
+	const userIsRegistered = useAppSelector(selectUserIsRegistered);
 	const params = useSearchParams();
 
 	const accountChangeMetamask = useCallback(async (address: string[]): Promise<void> => {
@@ -54,7 +54,7 @@ const Home = () => {
 					{error}
 				</Alert>
 			</Snackbar>}
-			<Main />;
+			<Main userIsRegistered={userIsRegistered}/>;
 		</>);
 };
 
