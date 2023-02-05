@@ -3,7 +3,6 @@ import { fetchFollowed, getTwitterAuthToken } from '../api/twitter';
 import { AppDispatch } from '../store';
 import {
 	connectAccount,
-	disconnectAccount,
 	setTwitterError,
 	toggleLoading,
 } from '../store/twitterReducer';

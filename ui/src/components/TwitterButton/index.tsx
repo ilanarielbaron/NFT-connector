@@ -8,19 +8,20 @@ import { selectWallet } from '../../store/walletReducer';
 import { fetchMeAndFollowing, getTwitterRedirectURL } from '../../utils/twitter';
 
 export const TwitterButton = () => {
-	const redirectURL = getTwitterRedirectURL();
-	const twitterAccount = useAppSelector(selectAccount);
-	const twitterToken = localStorage.getItem('twitterToken');
 	const dispatch = useAppDispatch();
-	const address = useAppSelector(selectWallet)?.address;
-	const twitterIsLoading = useAppSelector(selectTwitterIsLoading);
+	const twitterAccount = useAppSelector(selectAccount);
 	const twitterError = useAppSelector(selectTwitterError);
+	const twitterIsLoading = useAppSelector(selectTwitterIsLoading);
+	const address = useAppSelector(selectWallet)?.address;
 
+	const redirectURL = getTwitterRedirectURL();
+	const twitterToken = localStorage.getItem('twitterToken');
+	
 	const accountLoggedButNotVerified = twitterAccount?.accountUser && !twitterAccount.isVerified;
 
 	const [open, setOpen] = useState(false);
 
-	const handleClose = (event?: React.SyntheticEvent | Event, reason?: string) => {
+	const handleClose = (event?: React.SyntheticEvent | Event, reason?: string): void => {
 		if (reason === 'clickaway') {
 			return;
 		}
@@ -28,7 +29,7 @@ export const TwitterButton = () => {
 		setOpen(false);
 	};
 
-	const onClick = async () => {
+	const onClick = async (): Promise<void> => {
 		if (accountLoggedButNotVerified && address) {
 			const user = await getUserByAddress(address);
 
@@ -57,6 +58,7 @@ export const TwitterButton = () => {
 				</Alert>
 			</Snackbar>}
 			<Button
+				disabled={twitterIsLoading || twitterAccount?.isVerified}
 				variant='outlined'
 				sx={{ my: 1, mx: 1.5 }}
 				href={!twitterAccount?.accountUser ? redirectURL : ''}
