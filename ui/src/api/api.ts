@@ -13,13 +13,32 @@ export const getUserByAddress = async (
 		if (!response) return null;
 
 		return response.data?.user;
-	} catch(e:unknown) {
+	} catch(err) {
 		return null;
 	}
 };
 
-export const updateUser = async () => {
-	return;
+export const updateUser = async (user: User) => {
+	const requestOptions = {
+		method: 'PATCH',
+		headers: {
+			'Content-Type': 'application/json',
+		},
+		body: JSON.stringify({
+			user
+		}),
+	};
+
+	const url = `${BASE_URL}users/`;
+
+	try {
+		const response = await fetch(url, requestOptions).then((data) => data.json());
+		if (!response) return null;
+
+		return response.data?.user;
+	} catch(err) {
+		return null;
+	}
 };
 
 export const createUser = async (address: string): Promise<User | null> => {
@@ -40,7 +59,7 @@ export const createUser = async (address: string): Promise<User | null> => {
 		if (!response) return null;
 
 		return response.data?.user;
-	} catch(e: unknown) {
+	} catch(err) {
 		return null;
 	}
 };
@@ -57,7 +76,7 @@ export const fetchRandomUUID = async (): Promise<string | null> => {
 		if (!response) return null;
 
 		return response.data?.uuid;
-	} catch(e) {
+	} catch(err) {
 		return null;
 	}
 };
@@ -79,7 +98,7 @@ export const generateToken = async (sign: string): Promise<string | null> => {
 		if (!response) return null;
 
 		return response.data?.token;
-	} catch(e) {
+	} catch(err) {
 		return null;
 	}
 };
@@ -99,7 +118,7 @@ export const verifyToken = async (token: string): Promise<string | null> => {
 		if (!response.status) return null;
 
 		return response.data?.token;
-	} catch(e) {
+	} catch(err) {
 		return null;
 	}
 };

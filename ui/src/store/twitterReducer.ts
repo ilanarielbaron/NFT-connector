@@ -5,10 +5,12 @@ export const initialState = {
 	account: null,
 	isConnected: false,
 	isLoading: false,
+	twitterError: '',
 } as {
 	account: TwitterAccount | null,
 	isConnected: boolean,
 	isLoading: boolean,
+	twitterError: string,
 };
 
 export const nftsSlice = createSlice({
@@ -30,16 +32,23 @@ export const nftsSlice = createSlice({
 			state.account = null;
 			state.isConnected = false;
 		},
+		setTwitterError: (state, action: PayloadAction<{ error: string }>): void => {
+			state.twitterError = action.payload.error;
+			state.account = null;
+			state.isLoading = false;
+			state.isConnected = false;
+		},
 		toggleLoading: (state,action: PayloadAction<{ isLoading: boolean }>, ): void => {
 			state.isLoading = action.payload.isLoading;
 		},
 	},
 });
 
-export const { connectAccount, disconnectAccount, toggleLoading } = nftsSlice.actions;
+export const { connectAccount, disconnectAccount, toggleLoading, setTwitterError } = nftsSlice.actions;
 
 export const selectAccount = (state: RootState) => state.twitter.account;
 export const selectIsConnected = (state: RootState) => state.twitter.isConnected;
 export const selectTwitterIsLoading = (state: RootState) => state.twitter.isLoading;
+export const selectTwitterError = (state: RootState) => state.twitter.twitterError;
 
 export default nftsSlice.reducer;
