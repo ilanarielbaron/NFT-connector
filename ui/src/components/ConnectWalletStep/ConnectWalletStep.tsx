@@ -7,7 +7,7 @@ import { StepActionBar } from '../StepActionBar/StepActionBar';
 import actionArrow from './action-arrow.svg';
 import activeConnect from './active-connect.svg';
 
-export const ConnectWalletStep = ()=>{
+export const ConnectWalletStep = () => {
 	const [isStepActive, setIsStepActive] = useState(true);
 	const isWalletConnected = useAppSelector(selectWalletIsConnected);
 	const wallet = useAppSelector(selectWallet);
@@ -19,18 +19,18 @@ export const ConnectWalletStep = ()=>{
 	return (
 		<>
 			<Box sx={isStepActive ? activeStepBoxStyles : inactiveStepBoxStyles}>
-				<Box sx={{display:'flex'}}>
-					<img src={activeConnect}/>
-					<Box sx={{ml:'35px'}}>
+				<Box sx={{ display: 'flex' }}>
+					<img src={activeConnect} />
+					<Box sx={{ ml: '35px' }}>
 						<Typography variant='h5'>{stepTitle}</Typography>
-						<Typography  sx={{color: 'rgb(102 102 102)'}}>{stepDescription}</Typography>
+						<Typography sx={{ color: 'rgb(102 102 102)' }}>{stepDescription}</Typography>
 					</Box>
 				</Box>
 			</Box>
 
 			{isStepActive && (
-				<StepActionBar step="WALLET_STEP"/>
-			) 
+				<StepActionBar step="WALLET_STEP" />
+			)
 			}
 		</>
 	);
