@@ -108,6 +108,7 @@ export const generateToken = async (sign: string): Promise<string | null> => {
 
 		return response.data?.token;
 	} catch (err) {
+		console.log(err);
 		return null;
 	}
 };
