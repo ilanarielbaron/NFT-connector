@@ -14,7 +14,7 @@ export const TwitterStep = ()=>{
 				<Box sx={{display:'flex'}}>
 					<img src={inactiveTwitter}/>
 					<Box sx={{ml:'35px', color: activeStep ? '' : '#bbbbbb'}}>
-						<Typography variant='h5'>Follow <Link color="inherit">Igor</Link>, <Link  color="inherit">DimensionalsRPG</Link>, and <Link  color="inherit">SashaMackinnon</Link>
+						<Typography variant='h5'>Follow <Link href='#' color="inherit">DimensionalsRPG</Link>, and <Link href="#" color="inherit">SashaMackinnon</Link>
 						</Typography>
 						<Typography >And connect your twitter</Typography>
 					</Box>

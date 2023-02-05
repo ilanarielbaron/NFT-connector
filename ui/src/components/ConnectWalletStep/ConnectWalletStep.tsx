@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { useAppSelector } from '../../hooks/useAppSelector';
 import { selectWallet, selectWalletIsConnected } from '../../store/walletReducer';
 import { activeStepBoxStyles, inactiveStepBoxStyles } from '../Pipeline/PipelineStyles';
+import { StepActionBar } from '../StepActionBar/StepActionBar';
 import actionArrow from './action-arrow.svg';
 import activeConnect from './active-connect.svg';
 
@@ -10,12 +11,10 @@ export const ConnectWalletStep = ()=>{
 	const [isStepActive, setIsStepActive] = useState(true);
 	const isWalletConnected = useAppSelector(selectWalletIsConnected);
 	const wallet = useAppSelector(selectWallet);
-	const isSigned = wallet?.messageSigned;
 
-	const stepTitle = !isWalletConnected ? 'Connect your wallet' : !isSigned ? 'Sign a message' : wallet.address;
-	const stepDescription = !isWalletConnected ? 'Start the whitelist process' : !isSigned ? 'Prove this is your wallet' : 'Wallet connected';
-    
-	if(isSigned) setIsStepActive(false);
+	const stepTitle = !isWalletConnected ? 'Connect your wallet' : !wallet?.messageSigned ? 'Sign a message' : wallet.address;
+	const stepDescription = !isWalletConnected ? 'Start the whitelist process' : !wallet?.messageSigned ? 'Prove this is your wallet' : 'Wallet connected';
+	const actionName = !isWalletConnected ? 'CONNECT' : 'SIGN';
 
 	return (
 		<>
@@ -30,12 +29,7 @@ export const ConnectWalletStep = ()=>{
 			</Box>
 
 			{isStepActive && (
-				<Box bgcolor={'black'} sx={{display:'flex', justifyContent:'flex-end', padding:'15px', borderRadius:'0px 0px 8px 8px ', mb:'15px'}}>
-					<Link href='#' underline='none'>
-						<Typography variant='h5' color={'white'} sx={{display:'inline', mr:'15px'}}> CONNECT </Typography>
-						<img src={actionArrow} alt="Action arrow" />
-					</Link>
-				</Box>
+				<StepActionBar step="WALLET_STEP"/>
 			) 
 			}
 		</>

@@ -7,7 +7,6 @@ import inactiveTwitter from './inactive-questions.svg';
 export const QuestionsStep = ()=>{
 	const [activeStep, setActiveStep] = useState(false);
 
-
 	return (
 		<>
 		    <Box sx={activeStep ? activeStepBoxStyles : inactiveStepBoxStyles}>
@@ -21,7 +20,7 @@ export const QuestionsStep = ()=>{
 			</Box>
 
 			{activeStep && (
-			// TODO crear un componente por separado de esto
+			// TODO add StepActionBar component
 				<Link href='#' underline='none'>
 					<Box bgcolor={'black'} sx={{display:'flex', justifyContent:'flex-end', padding:'15px', borderRadius:'0px 0px 8px 8px '}}>
 						<Typography variant='h5' color={'white'} sx={{display:'inline', mr:'15px'}}> CONNECT </Typography>

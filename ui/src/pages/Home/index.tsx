@@ -13,10 +13,7 @@ const Home = () => {
 
 	if (isLoading) return <CircularProgress sx={{ marginTop: 5 }} />;
 
-	return <>{walletConnected || true  && 
-	//main component here
-		<Main/>
-	}</>;
+	return <Main/>;
 };
 
 export default Home;
