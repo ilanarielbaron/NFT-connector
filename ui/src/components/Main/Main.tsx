@@ -1,8 +1,13 @@
 import { Box, Grid, Link, Typography } from '@mui/material';
 import { Pipeline } from '../Pipeline/Pipeline';
 import twitterIcon from './twitterIcon.svg';
+import banner from './mino-banner.webp';
 
-export const Main = () => (
+interface Props {
+	userIsRegistered: boolean;
+}
+
+export const Main = ({ userIsRegistered }: Props) => (
 	<Box sx={{ marginLeft: '3%' }}>
 		<Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
 			<Link href="https://twitter.com/DimensionalsRPG" target="_blank" rel="noopener">
@@ -12,9 +17,10 @@ export const Main = () => (
 			</Link>
 		</Box>
 		<Box sx={{ marginY: '3rem' }}>
-			<Grid container spacing={2} >
+			<img src={banner} style={{maxWidth: '100%', borderRadius:'5px'}}></img>
+			<Grid container spacing={2} marginTop={10}>
 				<Grid item xs={12} md={6}>
-					<Typography variant='h3' sx={{ fontSize: '3rem', lineHeight: '60px', mt: '-15px' }} >Genesis Dimensional Stones</Typography>
+					<Typography variant='h3' sx={{ fontSize: '3rem', lineHeight: '60px', mt: '-15px' }} >{userIsRegistered && 'You are registered for '}Genesis Dimensional Stones</Typography>
 				</Grid>
 				<Grid item xs={12} md={6}>
 					<Typography sx={{ opacity: '0.6', lineHeight: '20px' }}>The most powerful relics in the multiverse – Genesis Dimensionals Stones have god like power – the ability to create and summon Dimensionals. Don’t miss your ticket into the most epic web3 adventure yet!</Typography>
@@ -22,7 +28,7 @@ export const Main = () => (
 			</Grid>
 		</Box>
 		<Box>
-			<Pipeline />
+			{!userIsRegistered && <Pipeline />}
 		</Box>
 	</Box>
 );
