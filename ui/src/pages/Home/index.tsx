@@ -1,18 +1,17 @@
-import { Alert, CircularProgress } from '@mui/material';
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
+import { Alert, CircularProgress, Snackbar } from '@mui/material';
 import { useSearchParams } from 'react-router-dom';
 import { Main } from '../../components/Main/Main';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { useAppSelector } from '../../hooks/useAppSelector';
 import { selectErrorMessage, selectUserIsLoading } from '../../store/userReducer';
-import { selectWalletIsConnected } from '../../store/walletReducer';
 import { accountChanged, chainChanged } from '../../utils/metamask';
 import { userIsConnected } from '../../utils/user';
 
 const Home = () => {
 	const dispatch = useAppDispatch();
 	//const wallet = useAppSelector(selectWallet);
-	const [searchParams, sett] = useSearchParams();
+	const [searchParams, setParams] = useSearchParams();
 
 	const accountChangeMetamask = useCallback(async (address: string[]): Promise<void> => {
 		accountChanged(address[0], dispatch);
@@ -32,16 +31,31 @@ const Home = () => {
 			userIsConnected(dispatch, twitterCode);
 		}
 	}, []);
-	
-	const walletConnected = useAppSelector(selectWalletIsConnected);
+
 	const isLoading = useAppSelector(selectUserIsLoading);
 	const error = useAppSelector(selectErrorMessage);
 
-	if (error) return <Alert severity='error'>{error}</Alert>;
+	const [open, setOpen] = useState(false);
+
+	const handleClose = (event?: React.SyntheticEvent | Event, reason?: string): void => {
+		if (reason === 'clickaway') {
+			return;
+		}
+
+		setOpen(false);
+	};
 
 	if (isLoading) return <CircularProgress sx={{ marginTop: 5 }} />;
 
-	return <Main/>;
+	return (
+		<>
+			{error && <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+				<Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
+					{error}
+				</Alert>
+			</Snackbar>}
+			<Main />;
+		</>);
 };
 
 export default Home;
