@@ -13,11 +13,12 @@ app.use(express.json({ limit: "10kb" }));
 
 // Allow all origins
 app.all("/*", function (req, res, next) {
-  res.header("Access-Control-Allow-Origin", config.get('origin'));
+  res.header("Access-Control-Allow-Origin", config.get('originDomain'));
   res.header("Access-Control-Allow-Headers", "Content-Type, authorization");
   res.header("Access-Control-Allow-Methods", "DELETE, PUT, GET, POST, PATCH");
   next();
 });
+app.get('/', (req, res) => res.send('v0.0.3'));
 
 mongoose.connect(
   `mongodb+srv://${config.get("mongoUser")}:${config.get(

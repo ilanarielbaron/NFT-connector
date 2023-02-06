@@ -61,6 +61,7 @@ export const signAccount = async(dispatch: AppDispatch, address: string): Promis
 		});
 		
 	} catch (err) {
+		console.log(err);
 		dispatch(errorMessage({ message: 'There was a problem signing the message' }));
 	}
 };

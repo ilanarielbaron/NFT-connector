@@ -4,7 +4,7 @@ import Home from '../../pages/Home';
 
 const RoutesComponent = () => {
 	return (
-		<BrowserRouter>
+		<BrowserRouter basename='/whitelist'>
 			<Routes>
 				<Route path='/' element={<Home />} />
 			</Routes>
