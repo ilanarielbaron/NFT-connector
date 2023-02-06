@@ -31,7 +31,6 @@ export const getTwitterAuthToken = async (req: Request, res: Response) => {
     const response = await fetch(url, requestOptions).then((data) =>
       data.json()
     );
-    console.log(response);
     if (!response["access_token"])
       return res.status(401).json({
         status: "fail",
