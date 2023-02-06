@@ -99,9 +99,7 @@ export const QuestionsStep = () => {
 			</Box>
 			{isActive && (
 				<Box bgcolor={'black'} sx={{ display: 'flex', justifyContent: 'flex-end', padding: '15px', borderRadius: '0px 0px 8px 8px ', mb: '15px' }}>
-					<Link href='#' underline='none'>
-						<AnswerButton setOpen={setOpen} />
-					</Link>
+					<AnswerButton setOpen={setOpen} />
 				</Box>
 			)}
 		</Box>
