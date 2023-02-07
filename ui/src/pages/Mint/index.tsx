@@ -21,6 +21,7 @@ import {
 	MintActionWrapper,
 	PaperFoot,
 	Pricing,
+	StyledA
 } from './styled';
 
 const darkTheme = createTheme({ palette: { mode: 'dark' } });
@@ -164,12 +165,13 @@ const Mint = () => {
 											Explore Contract Address on
 											Etherscan
 										</ContractAddress>
-										<Link
-											component={RouterLink}
-											to={`https://etherscan.io/address/${wallet?.accounts[0]?.address}`}
+										<StyledA
+											href={`https://etherscan.io/address/${wallet?.accounts[0]?.address}`}
+											target="_blank"
+											rel="noopener noreferrer"
 										>
 											{wallet?.accounts[0]?.address}
-										</Link>
+										</StyledA>
 									</PaperFoot>
 								)}
 							</Box>

@@ -94,5 +94,9 @@ export const Pricing = styled.div`
     padding-bottom: 1rem;
 	width: 100%;
 	margin-top: 4rem;
-}
+`;
+
+export const StyledA = styled.a`
+	color: #90caf9;
+	text-decoration: none;
 `;
